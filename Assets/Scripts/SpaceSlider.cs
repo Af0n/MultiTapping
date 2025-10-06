@@ -5,23 +5,23 @@ public class SpaceSlider : MonoBehaviour
     public float MinX;
     public float MaxX;
 
-    [Range(0.01f, 1)]
-    public float Rate = 0.01f;
+    [Range(0f, 1)]
+    public float Rate;
     public bool IsReverse;
 
-    public float BonusSize
+    public float BonusScaling
     {
-        get { return 1 - Mathf.Pow(2, Rate); }
+        get { return Mathf.Pow(2, -Rate); }
     }
 
     public float BonusMin
     {
-        get { return 0 + BonusSize / 2; }
+        get { return (1 - BonusScaling) / 2; }
     }
 
     public float BonusMax
     {
-        get { return 1 - BonusSize / 2; }
+        get { return 1 - BonusMin; }
     }
 
     private Transform _ball;
@@ -33,9 +33,9 @@ public class SpaceSlider : MonoBehaviour
         get { return MinX + (MaxX - MinX) * _t; }
     }
 
-    public float BonusScalar
+    public float BonusAreaScalar
     {
-        get { return (MaxX - MinX) * BonusSize; }
+        get { return (MaxX - MinX) * BonusScaling; }
     }
 
     public bool IsInBonus
@@ -68,7 +68,7 @@ public class SpaceSlider : MonoBehaviour
         // updating ball position
         _ball.localPosition = new(XPos, 0, 0);
         // update bonus region size
-        _bonusRegion.localScale = new(BonusScalar, 0.5f, 1);
+        _bonusRegion.localScale = new(BonusAreaScalar, 0.5f, 1);
         // check for bonus
         if (IsInBonus)
         {
