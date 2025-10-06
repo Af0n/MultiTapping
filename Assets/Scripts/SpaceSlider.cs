@@ -5,13 +5,23 @@ public class SpaceSlider : MonoBehaviour
     public float MinX;
     public float MaxX;
 
-    [Range(0f, 1)]
-    public float Rate;
+    public float BaseRate;
+    public float Difficulty;
     public bool IsReverse;
+
+    private Transform _ball;
+    private Transform _bonusRegion;
+    private float _rate;
+    private float _t = 0.5f;
+
+    public float Rate
+    {
+        get { return Rate; }
+    }
 
     public float BonusScaling
     {
-        get { return Mathf.Pow(2, -Rate); }
+        get { return Mathf.Pow(2, -_rate); }
     }
 
     public float BonusMin
@@ -23,10 +33,6 @@ public class SpaceSlider : MonoBehaviour
     {
         get { return 1 - BonusMin; }
     }
-
-    private Transform _ball;
-    private Transform _bonusRegion;
-    private float _t = 0.5f;
 
     public float XPos
     {
@@ -59,12 +65,14 @@ public class SpaceSlider : MonoBehaviour
         MinX = CameraBounds.instance.MinX;
         MaxX = CameraBounds.instance.MaxX;
         transform.GetChild(2).localScale = new(MaxX - MinX, 0.5f, 1);
+        _rate = BaseRate;
     }
 
     public void Update()
     {
+        _rate += Difficulty * Time.deltaTime;
         // changing the interpolation value;
-        _t += IsReverse ? -Rate * Time.deltaTime : Rate * Time.deltaTime;
+        _t += IsReverse ? -_rate * Time.deltaTime : _rate * Time.deltaTime;
         // updating ball position
         _ball.localPosition = new(XPos, 0, 0);
         // update bonus region size
