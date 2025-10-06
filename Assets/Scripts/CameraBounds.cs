@@ -40,12 +40,19 @@ public class CameraBounds : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Vector2 minCorner = new(MinX, MinY);
-        Vector2 maxCorner = new(MaxX, MaxY);
+    public static CameraBounds instance;
 
-        Debug.Log(minCorner);
-        Debug.Log(maxCorner);
+    private void Awake()
+    {
+        instance = this;
     }
+
+    // private void Start()
+    // {
+    //     Vector2 minCorner = new(MinX, MinY);
+    //     Vector2 maxCorner = new(MaxX, MaxY);
+
+    //     Debug.Log(minCorner);
+    //     Debug.Log(maxCorner);
+    // }
 }
