@@ -676,7 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinX: 0
   MaxX: 0
-  Rate: 0
+  Rate: 0.1
   IsReverse: 0
   BonusSize: 0.9
 --- !u!4 &2074683417
