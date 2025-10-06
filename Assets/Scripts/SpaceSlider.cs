@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class SpaceSlider : MonoBehaviour
 {
+    [Tooltip("Starting Rate")]
     public float BaseRate;
+    [Tooltip("How quickly speed ramps")]
     public float Difficulty;
     public bool IsReverse;
+    [Range(0,1)]
+    [Tooltip("0-1 How much vertical screen space this takes up")]
     public float VerticalScale;
 
     private Transform _ball;
@@ -49,7 +53,7 @@ public class SpaceSlider : MonoBehaviour
 
     public float VerticalScalar
     {
-        get { return (_maxY - _minY) * 0.1f; }
+        get { return (_maxY - _minY) * VerticalScale; }
     }
 
     public bool IsInBonus

@@ -761,11 +761,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a993c05f41ded247be8688329f1ae3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinX: 0
-  MaxX: 0
   BaseRate: 0.1
   Difficulty: 0.001
   IsReverse: 0
+  VerticalScale: 0.05
 --- !u!4 &2074683417
 Transform:
   m_ObjectHideFlags: 0
