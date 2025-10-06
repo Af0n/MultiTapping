@@ -2,15 +2,50 @@ using UnityEngine;
 
 public class CameraBounds : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float MinX
     {
-        
+        get
+        {
+            float aspect = Camera.main.aspect;
+            float size = Camera.main.orthographicSize;
+            float width = size * aspect;
+            return Camera.main.transform.position.x - width;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public float MaxX
     {
-        
+        get
+        {
+            float aspect = Camera.main.aspect;
+            float size = Camera.main.orthographicSize;
+            float width = size * aspect;
+            return Camera.main.transform.position.x + width;
+        }
+    }
+
+    public float MinY
+    {
+        get
+        {
+            return Camera.main.transform.position.y - Camera.main.orthographicSize;
+        }
+    }
+
+    public float MaxY
+    {
+        get
+        {
+            return Camera.main.transform.position.y + Camera.main.orthographicSize;
+        }
+    }
+
+    private void Start()
+    {
+        Vector2 minCorner = new(MinX, MinY);
+        Vector2 maxCorner = new(MaxX, MaxY);
+
+        Debug.Log(minCorner);
+        Debug.Log(maxCorner);
     }
 }
