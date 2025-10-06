@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class SpaceSlider : MonoBehaviour
 {
-    public float MinX;
-    public float MaxX;
-
     public float BaseRate;
     public float Difficulty;
     public bool IsReverse;
+    public float VerticalScale;
 
     private Transform _ball;
     private Transform _bonusRegion;
     private float _rate;
     private float _t = 0.5f;
+
+    private float _minX;
+    private float _maxX;
+    private float _minY;
+    private float _maxY;
 
     public float Rate
     {
@@ -36,12 +39,17 @@ public class SpaceSlider : MonoBehaviour
 
     public float XPos
     {
-        get { return MinX + (MaxX - MinX) * _t; }
+        get { return _minX + (_maxX - _minX) * _t; }
     }
 
     public float BonusAreaScalar
     {
-        get { return (MaxX - MinX) * BonusScaling; }
+        get { return (_maxX - _minX) * BonusScaling; }
+    }
+
+    public float VerticalScalar
+    {
+        get { return (_maxY - _minY) * 0.1f; }
     }
 
     public bool IsInBonus
@@ -62,9 +70,15 @@ public class SpaceSlider : MonoBehaviour
 
     void Start()
     {
-        MinX = CameraBounds.instance.MinX;
-        MaxX = CameraBounds.instance.MaxX;
-        transform.GetChild(2).localScale = new(MaxX - MinX, 0.5f, 1);
+        // scale fields
+        _minX = CameraBounds.instance.MinX;
+        _maxX = CameraBounds.instance.MaxX;
+        _minY = CameraBounds.instance.MinY;
+        _maxY = CameraBounds.instance.MaxY;
+
+        _ball.localScale = new(VerticalScalar * 0.75f, VerticalScalar * 0.75f, 1);
+        // background
+        transform.GetChild(2).localScale = new(_maxX - _minX, VerticalScalar, 1);
         _rate = BaseRate;
     }
 
@@ -76,7 +90,7 @@ public class SpaceSlider : MonoBehaviour
         // updating ball position
         _ball.localPosition = new(XPos, 0, 0);
         // update bonus region size
-        _bonusRegion.localScale = new(BonusAreaScalar, 0.5f, 1);
+        _bonusRegion.localScale = new(BonusAreaScalar, VerticalScalar, 1);
         // check for bonus
         if (IsInBonus)
         {
